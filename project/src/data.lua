@@ -1,7 +1,6 @@
 -- game.lua
 local json = require "libs.dkjson"
 local io = require "io"
-local os = require "os"
 
 local module = {}
 
