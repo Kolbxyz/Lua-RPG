@@ -1,3 +1,9 @@
 {
-    "stylua.targetReleaseVersion": "latest"
+    "stylua.targetReleaseVersion": "latest",
+    "robloxLsp.diagnostics.globals": [
+        "love"
+    ],
+    "robloxLsp.diagnostics.disable": [
+        "redefined-local"
+    ]
 }

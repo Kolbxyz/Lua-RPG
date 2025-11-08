@@ -1,10 +1,13 @@
 -- movements.lua
-local love = require("love")
-local data = require("data")
+local dataModule    =   require("data")
+
+local data          =   dataModule.data
 
 local methods = {}
 
---// Functions:
+--[[
+==== Process input and move the player accordingly
+]]--
 function methods:movements(dt)
     local player = self
     local player_speed = player.speed * dt
