@@ -1,0 +1,6 @@
+#!/bin/bash
+cd project/src
+zip -r project.love .
+mv project.love ../..
+cd ../..
+./love/love.AppImage project.love
