@@ -1,6 +1,7 @@
 # Lua RPG
 This project's goal is to create a RPG from scratch, in lua, using the Löve2D framework.
 
+
 ## Progress
 🟢 load tilemaps / render quads  
 🟢 save data / load data  
