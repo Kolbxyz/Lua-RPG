@@ -6,9 +6,9 @@ This project is designed to be as simple as possible to be compiled and run.
 However, since windows remains a piece of garbage and because I'm too lazy to write a script for that, compilation currently only works on linux. If you want to try the project on windows anyway, you can compile the project by yourself with the Love2D framework available for free [here](https://love2d.org). Another option is to use Windows Subsystem for Linux (WSL) which works decently although it seems not to detect graphical dev (which ig makes sense).
 
 If you're on Linux however, things get much simpler, just do ``./launch`` and... that's it, really!
-You may get a warning about FUSE not being installed, execute the following commands and you should be good to go!
-$ sudo add-apt-repository universe
-$ sudo apt install libfuse2
+You may get a warning about FUSE not being installed, execute the following commands and you should be good to go!  
+$ sudo add-apt-repository universe  
+$ sudo apt install libfuse2  
 
 Hope you enjoy!
 
