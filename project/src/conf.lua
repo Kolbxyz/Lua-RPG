@@ -9,4 +9,7 @@ local data = dataModule.data or {}
 function love.conf(t)
     t.window.width = data.game.WIDTH
     t.window.height = data.game.HEIGHT
+    t.window.title = ("Lua RPG")
+    t.window.resizable = false
+    t.window.vsync = true
 end

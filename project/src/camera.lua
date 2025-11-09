@@ -2,7 +2,7 @@
 --// Modules:
 local dataModule = require("data")
 
-local data      =   dataModule.data
+local data      =   dataModule.data or {}
 local game      =   data.game
 local camera    =   data.camera
 local player    =   data.player
