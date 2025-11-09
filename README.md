@@ -18,6 +18,7 @@ Hope you enjoy!
 🟢 camera  
 🟢 music  
 🟢 basic rendering  
+🟢 character spritesheet rendering and animations  
 🟠 inventory  
 🟠 map  
 🔴 advanced dialogs (this one's gonna be very fun to do)  

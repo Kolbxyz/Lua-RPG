@@ -1,7 +1,6 @@
 -- game.lua
-local json = require "libs.dkjson"
-local io = require "io"
-local os = require "os"
+local json = require("libs.dkjson")
+local io = require("io")
 
 local module = {}
 
@@ -10,8 +9,8 @@ module.data = {
     ==== Contains all the game's data to run the game
     ]]--
     game = {
-        WIDTH = 1920,
-        HEIGHT = 1080,
+        WIDTH = 800,
+        HEIGHT = 600,
     },
     --[[
     ==== Camera information
@@ -25,9 +24,16 @@ module.data = {
     ==== Contains player's data
     ]]--
     player = {
+        --[[
+        ==== 1 : down
+        ==== 2: left
+        ==== 3: right
+        ==== 4: top
+        ]]--
+        direction = 1,
         x = 0,
         y = 0,
-        speed = 2000,
+        speed = 150,
         inventory = {
             money = 0;
         }

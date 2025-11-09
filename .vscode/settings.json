@@ -5,5 +5,8 @@
     ],
     "robloxLsp.diagnostics.disable": [
         "redefined-local"
+    ],
+    "Lua.diagnostics.globals": [
+        "love"
     ]
 }

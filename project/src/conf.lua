@@ -1,7 +1,6 @@
 -- conf.lua
 local dataModule = require("data")
-local data = dataModule.data
-local love = require("love")
+local data = dataModule.data or {}
 
 --[[
 ==== To be executed once at program's execution
