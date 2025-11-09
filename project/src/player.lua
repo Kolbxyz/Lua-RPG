@@ -32,7 +32,8 @@ function methods.load(state, name)
 end
 
 --[[
-==== Render the map from state
+==== Render the player from state
+==== Handle animations from user input
 ]]--
 function methods:render(state)
     local player = self
