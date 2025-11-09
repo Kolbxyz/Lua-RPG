@@ -46,6 +46,7 @@ function module.loadData()
 
     if not file then
         module.saveData()
+        file:close()
         file = io.open("data.json", "r")
     end
     data = file:read("*a")
