@@ -1,75 +1,67 @@
 -- main.lua
-local os                =   require("os")
-local dataModule        =   require("data")
-local cameraModule      =   require("camera")
-local playerModule      =   require("player")
-local mapModule         =   require("map")
-local musicModule       =   require("music")
-local inventoryModule   =   require("inventory")
+local love = require("love")
 
-local data      =   dataModule.data or {}
-local player    =   data.player
-local camera    =   data.camera
+--// Modules:
+local data = require("data")
+local cameraModule = require("camera")
+local playerModule = require("player")
 
-local state = {
-    --[[
-    ==== Contains all the game's data to run the game
-    ]]--
-    game = {
-        hasLoaded = false,
-	    background = nil,
-    },
-    map = {
-        tilesetImage = nil,
-	    tilemap = {},
-	    quads = {},
-    },
-    player = {
-        animationTickTime = os.clock(),
-        animationTick = 1,
-        tilesetImage = nil,
-        quads = {},
-    },
-    music = {},
-}
+--// VALUES:
+local game = data.game
+local player = data.player
+local camera = data.camera
 
---[[
-==== To be executed once at program's execution
-]]--
+local background = nil
+
 function love.load()
-    setmetatable(playerModule, {__index = inventoryModule})
+    Tileset = love.graphics.newImage("assets/tilemap.png")
+    local image_width = Tileset:getWidth()
+    local image_height = Tileset:getHeight()
+    Width = (image_width / 3) - 2
+    Height = (image_height / 2) - 2
+    Quads = {}
+
+    for y = 0, 1 do
+        for x = 0, 2 do
+            local newQuad = love.graphics.newQuad(1 + x * (Width + 2), 1 + y * (Height + 2), Width, Height, image_width, image_height)
+            table.insert(Quads, newQuad)
+        end
+    end
+    Tilemap = {
+        {1, 6, 6, 2, 1, 6, 6, 2},
+        {3, 0, 0, 4, 5, 0, 0, 3},
+        {3, 0, 0, 0, 0, 0, 0, 3},
+        {4, 2, 0, 0, 0, 0, 1, 5},
+        {1, 5, 0, 0, 0, 0, 4, 2},
+        {3, 0, 0, 0, 0, 0, 0, 3},
+        {3, 0, 0, 1, 2, 0, 0, 3},
+        {4, 6, 6, 5, 4, 6, 6, 5}
+    }
     setmetatable(player, {__index = playerModule})
     setmetatable(camera, {__index = cameraModule})
-
-    state.game.background = love.graphics.newImage('assets/background.jpg')
-    musicModule.load(state, "music", false, true)
-    mapModule.load(state, "test", "Basics")
-    playerModule.load(state, "Male/Male 01-1")
-
-    state.game.hasLoaded = true
+    background = love.graphics.newImage('assets/background.jpg')
 end
 
---[[
-==== Refresh screen
-]]--
 function love.draw()
     love.graphics.clear()
-    love.graphics.draw(state.game.background, 0, 0)
+    love.graphics.draw(background, 0, 0)
+
     love.graphics.push()
     love.graphics.translate(-camera.x, -camera.y)
-    mapModule.render(state)
+
+    for i, row in ipairs(Tilemap) do
+        for j, tile in ipairs(row) do
+            if tile ~= 0 then
+                love.graphics.draw(Tileset, Quads[tile], j * Width, i * Height)
+            end
+        end
+    end
+
     love.graphics.pop()
-    player:render(state)
-    player:giveMoney(5)
-    love.graphics.print(player.inventory.money)
+    love.graphics.circle("fill", game.WIDTH / 2, game.HEIGHT / 2, 10, 8)
 end
 
---[[
-==== To be executed every frame
-]]--
 function love.update(dt)
-    player:movements(dt, state)
+    player:movements(dt)
     camera:update(dt)
 end
-
-love.quit = dataModule.saveData
