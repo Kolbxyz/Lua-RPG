@@ -1,6 +1,6 @@
 -- game.lua
-local json = require("libs.dkjson")
-local io = require("io")
+local Json = require("libs.dkjson")
+local Io = require("io")
 
 local module = {}
 
@@ -41,7 +41,7 @@ module.data = {
 }
 
 function module.loadData()
-    local file = io.open("data.json", "r")
+    local file = Io.open("data.json", "r")
     local data = nil
 
     if not file then
@@ -53,18 +53,18 @@ function module.loadData()
     if not data or data == "" then
         error("Empty or corrupted data.")
     end
-    module.data = json.decode(data)
+    module.data = Json.decode(data)
     return true
 end
 
 function module.saveData()
-    local file, err = io.open("data.json", "w")
+    local file, err = Io.open("data.json", "w")
     local encodedData = nil
 
     if not file then
         error("Couldn't save save file " .. tostring(err))
     end
-    encodedData = json.encode(module.data, { indent = true })
+    encodedData = Json.encode(module.data, { indent = true })
     file:write(encodedData)
     file:close()
 end

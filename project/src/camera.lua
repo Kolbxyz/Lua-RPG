@@ -1,8 +1,8 @@
 -- camera.lua
 --// Modules:
-local dataModule = require("data")
+local DataModule = require("data")
 
-local data      =   dataModule.data or {}
+local data      =   DataModule.data or {}
 local game      =   data.game
 local camera    =   data.camera
 local player    =   data.player

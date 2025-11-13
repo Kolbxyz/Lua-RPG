@@ -1,13 +1,14 @@
 -- main.lua
-local os                =   require("os")
-local dataModule        =   require("data")
-local cameraModule      =   require("camera")
-local playerModule      =   require("player")
-local mapModule         =   require("map")
-local musicModule       =   require("music")
-local inventoryModule   =   require("inventory")
+local Os                = require("os")
+local DataModule        = require("data")
+local CameraModule      = require("camera")
+local PlayerModule      = require("player")
+local MapModule         = require("map")
+local MusicModule       = require("music")
+local InventoryModule   = require("inventory")
+local InterfaceModule   = require("interface")
 
-local data      =   dataModule.data or {}
+local data      =   DataModule.data or {}
 local player    =   data.player
 local camera    =   data.camera
 
@@ -25,7 +26,7 @@ local state = {
 	    quads = {},
     },
     player = {
-        animationTickTime = os.clock(),
+        animationTickTime = Os.clock(),
         animationTick = 1,
         tilesetImage = nil,
         quads = {},
@@ -37,14 +38,18 @@ local state = {
 ==== To be executed once at program's execution
 ]]--
 function love.load()
-    setmetatable(playerModule, {__index = inventoryModule})
-    setmetatable(player, {__index = playerModule})
-    setmetatable(camera, {__index = cameraModule})
+    local font = love.graphics.newFont("assets/Kanit-Regular.ttf", 32)
 
+    love.graphics.setFont(font)
+    setmetatable(PlayerModule, {__index = InventoryModule})
+    setmetatable(player, {__index = PlayerModule})
+    setmetatable(camera, {__index = CameraModule})
+
+    
     state.game.background = love.graphics.newImage('assets/background.jpg')
-    musicModule.load(state, "music", false, true)
-    mapModule.load(state, "test", "Basics")
-    playerModule.load(state, "Male/Male 01-1")
+    MusicModule.load(state, "music", false, true)
+    MapModule.load(state, "test", "Basics")
+    PlayerModule.load(state, "Male/Male 01-1")
 
     state.game.hasLoaded = true
 end
@@ -55,21 +60,33 @@ end
 function love.draw()
     love.graphics.clear()
     love.graphics.draw(state.game.background, 0, 0)
+
     love.graphics.push()
     love.graphics.translate(-camera.x, -camera.y)
-    mapModule.render(state)
+    MapModule.render(state)
     love.graphics.pop()
+
+    InterfaceModule.render(player);
     player:render(state)
     player:giveMoney(5)
-    love.graphics.print(player.inventory.money)
 end
 
 --[[
 ==== To be executed every frame
 ]]--
 function love.update(dt)
+    InterfaceModule.updatePtr()
     player:movements(dt, state)
     camera:update(dt)
 end
 
-love.quit = dataModule.saveData
+--[[
+==== Sends a signal for the user interface
+]]--
+function love.mousereleased(x, y, button)
+	if (button == 1) then
+		InterfaceModule.pointer:raise("release", player)
+	end
+end
+
+love.quit = DataModule.saveData

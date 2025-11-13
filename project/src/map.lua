@@ -1,6 +1,6 @@
 -- map.lua
 --// Modules
-local json = require "libs.dkjson"
+local Json = require "libs.dkjson"
 
 -- Method
 local map = {}
@@ -54,8 +54,8 @@ end
 function map.load(state, name, tileset)
     local tileset_f = love.filesystem.read(string.format("assets/maps/tilesets/%s.tsj", name or "test"))
     local map_f = love.filesystem.read(string.format("assets/maps/data/%s.json", name or "test"))
-    local tilesetData = json.decode(tileset_f)
-    local mapData = json.decode(map_f)
+    local tilesetData = Json.decode(tileset_f)
+    local mapData = Json.decode(map_f)
 
     state.map.tilesetImage = love.graphics.newImage(string.format("assets/maps/tilemaps/%s.png", tileset or "Basics"))
     loadQuads(state, tilesetData)
