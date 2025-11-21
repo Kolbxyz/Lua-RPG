@@ -38,7 +38,7 @@ local state = {
 ==== To be executed once at program's execution
 ]]--
 function love.load()
-    local font = love.graphics.newFont("assets/Kanit-Regular.ttf", 32)
+    local font = love.graphics.newFont("assets/Kanit-Regular.ttf", 30)
 
     love.graphics.setFont(font)
     setmetatable(PlayerModule, {__index = InventoryModule})
@@ -48,7 +48,7 @@ function love.load()
     
     state.game.background = love.graphics.newImage('assets/background.jpg')
     MusicModule.load(state, "music", false, true)
-    MapModule.load(state, "test", "Basics")
+    MapModule.load(state, "island", "diverse")
     PlayerModule.load(state, "Male/Male 01-1")
 
     state.game.hasLoaded = true
@@ -66,9 +66,9 @@ function love.draw()
     MapModule.render(state)
     love.graphics.pop()
 
-    InterfaceModule.render(player);
     player:render(state)
-    player:giveMoney(5)
+    player:giveMoney(.1)
+    InterfaceModule.render(player);
 end
 
 --[[

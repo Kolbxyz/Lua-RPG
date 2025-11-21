@@ -33,11 +33,11 @@ function interface.render(playerData)
 
     interface.scene:beginFrame()
 
-    PositionLabel.props.count = string.format("%.2f", playerData.x) .. " " .. string.format("%.2f", playerData.y)
-    MoneyLabel.props.count = playerData.inventory.money
+    PositionLabel.props.count = string.format("x: %.2f", playerData.x) .. " y: " .. string.format("%.2f", playerData.y)
+    MoneyLabel.props.count = string.format("%.0f", playerData.inventory.money)
 
-    MoneyLabel:render(10, 10, 400, 50)
-    PositionLabel:render(10, 60, 400, 50)
+    MoneyLabel:render(10, 10, 500, 50)
+    PositionLabel:render(10, 60, 500, 50)
 
     interface.scene:finishFrame()
 end
