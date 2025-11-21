@@ -7,6 +7,7 @@ local MapModule         = require("map")
 local MusicModule       = require("music")
 local InventoryModule   = require("inventory")
 local InterfaceModule   = require("interface")
+local MathsModule       = require("libs.maths")
 
 local data      =   DataModule.data or {}
 local player    =   data.player
@@ -48,8 +49,8 @@ function love.load()
     setmetatable(PlayerModule, {__index = InventoryModule})
     setmetatable(player, {__index = PlayerModule})
     setmetatable(camera, {__index = CameraModule})
+    setmetatable(math, {__index = MathsModule})
 
-    
     state.game.background = love.graphics.newImage('assets/background.jpg')
     MusicModule.load(state, "music", false, true)
     MapModule.load(state, "island", "diverse")
