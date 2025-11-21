@@ -40,7 +40,7 @@ function methods:render(state)
     local quadIndex = state.player.animationTick + (3 * (player.direction - 1))
 
     if love.keyboard.isDown('s', "q", "d", "z") then
-        if os.clock() - state.player.animationTickTime > .09 then
+        if os.clock() - state.player.animationTickTime > .09 / (love.keyboard.isDown('lshift') and 2 or 1) then
             state.player.animationTick = state.player.animationTick >= 3 and 1 or state.player.animationTick + 1
             state.player.animationTickTime = os.clock()
         end
@@ -59,15 +59,15 @@ end
 ]]--
 function methods:movements(dt, state)
     local player = self
-    local player_speed = player.speed * dt
-    local vertical_limiter = (love.keyboard.isDown('d') or love.keyboard.isDown('q')) and 2 or 1
-    local horizontal_limiter   = (love.keyboard.isDown('z') or love.keyboard.isDown('s')) and 2 or 1
+    local playerSpeed = player.speed * dt
+    local vLim = (love.keyboard.isDown('d') or love.keyboard.isDown('q')) and 2 or 1
+    local hLim   = (love.keyboard.isDown('z') or love.keyboard.isDown('s')) and 2 or 1
 
     -- Prevents "double speed" if moving horizontally and vertically simultaneously
-    if love.keyboard.isDown('d') then player.x = (player.x + player_speed / horizontal_limiter) end
-    if love.keyboard.isDown('q') then player.x = (player.x - player_speed / horizontal_limiter) end
-    if love.keyboard.isDown('z') then player.y = (player.y - player_speed / vertical_limiter) end
-    if love.keyboard.isDown('s') then player.y = (player.y + player_speed / vertical_limiter) end
+    if love.keyboard.isDown('d') then player.x = (player.x + (playerSpeed / hLim) * (love.keyboard.isDown('lshift') and 2 or 1)) end
+    if love.keyboard.isDown('q') then player.x = (player.x - (playerSpeed / hLim) * (love.keyboard.isDown('lshift') and 2 or 1)) end
+    if love.keyboard.isDown('z') then player.y = (player.y - (playerSpeed / vLim) * (love.keyboard.isDown('lshift') and 2 or 1)) end
+    if love.keyboard.isDown('s') then player.y = (player.y + (playerSpeed / vLim) * (love.keyboard.isDown('lshift') and 2 or 1)) end
 
     player.direction = love.keyboard.isDown('s') and 1 or player.direction -- Player is facing down
     player.direction = love.keyboard.isDown('q') and 2 or player.direction -- Player is facing left

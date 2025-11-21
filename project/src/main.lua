@@ -1,5 +1,5 @@
 -- main.lua
-local Os                = require("os")
+local os                = require("os")
 local DataModule        = require("data")
 local CameraModule      = require("camera")
 local PlayerModule      = require("player")
@@ -31,7 +31,7 @@ local state = {
         tileHeight = 0,
     },
     player = {
-        animationTickTime = Os.clock(),
+        animationTickTime = os.clock(),
         animationTick = 1,
         tilesetImage = nil,
         quads = {},
