@@ -46,6 +46,8 @@ local function loadMap(state, mapData)
         state.map.offsetx[layerIndex] = layer.offsetx or 0
         state.map.offsety[layerIndex] = layer.offsety or 0
     end
+    state.map.tileWidth = mapData.tilewidth or 16
+    state.map.tileHeight = mapData.tileheight or 16
 end
 
 --[[
@@ -73,8 +75,8 @@ function map.render(state)
                 if tile ~= 0 and state.map.quads[tile] then
                     love.graphics.draw(state.map.tilesetImage,
                         state.map.quads[tile],
-                        j * 16 + state.map.offsetx[l],
-                        i * 16 + state.map.offsety[l])
+                        j * state.map.tileWidth + state.map.offsetx[l],
+                        i * state.map.tileHeight + state.map.offsety[l])
                 end
             end
         end

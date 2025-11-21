@@ -26,6 +26,8 @@ local state = {
 	    quads = {},
         offsetx = {},
         offsety = {},
+        tileWidth = 0,
+        tileHeight = 0,
     },
     player = {
         animationTickTime = Os.clock(),
