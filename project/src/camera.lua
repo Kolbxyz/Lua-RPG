@@ -16,7 +16,7 @@ local methods = {}
 --[[
 ==== Update camera from player
 ]]--
-function methods:update(dt)
+function methods:update()
     camera.x = math.round(player.x - WIDTH / 2)
     camera.y = math.round(player.y - HEIGHT / 2)
 end

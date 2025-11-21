@@ -65,12 +65,12 @@ end
 function love.draw()
     love.graphics.clear()
     love.graphics.draw(state.game.background, 0, 0)
-
     love.graphics.push()
+
     love.graphics.translate(-camera.x, -camera.y)
     MapModule.render(state)
-    love.graphics.pop()
 
+    love.graphics.pop()
     player:render(state)
     player:giveMoney(.1)
     InterfaceModule.render(player);
@@ -82,7 +82,7 @@ end
 function love.update(dt)
     InterfaceModule.updatePtr()
     player:movements(dt, state)
-    camera:update(dt)
+    camera:update()
 end
 
 --[[
