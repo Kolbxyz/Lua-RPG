@@ -24,6 +24,8 @@ local state = {
         tilesetImage = nil,
 	    tilemap = {},
 	    quads = {},
+        offsetx = {},
+        offsety = {},
     },
     player = {
         animationTickTime = Os.clock(),
