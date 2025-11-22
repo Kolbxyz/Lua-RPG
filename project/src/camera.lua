@@ -1,8 +1,9 @@
+---@diagnostic disable: undefined-field
 -- camera.lua
 --// Modules:
-local dataModule = require("data")
+local DataModule = require("data")
 
-local data      =   dataModule.data or {}
+local data      =   DataModule.data or {}
 local game      =   data.game
 local camera    =   data.camera
 local player    =   data.player
@@ -15,11 +16,9 @@ local methods = {}
 --[[
 ==== Update camera from player
 ]]--
-function methods:update(dt)
-    local speed = 5
-
-    camera.x = camera.x + ((player.x - WIDTH / 2) - camera.x) * speed * dt
-    camera.y = camera.y + ((player.y - HEIGHT / 2) - camera.y) * speed * dt
+function methods:update()
+    camera.x = math.round(player.x - WIDTH / 2)
+    camera.y = math.round(player.y - HEIGHT / 2)
 end
 
 return methods

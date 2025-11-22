@@ -8,11 +8,11 @@ function methods.load(state, musicName, stopOthers, shouldPlay)
     musicFile:setLooping(true)
     table.insert(state.music, music)
     if shouldPlay then
-        music:play(state, stopOthers)
+        music:Play(state, stopOthers)
     end
 end
 
-function methods:play(state, stopOthers)
+function methods:Play(state, stopOthers)
     local music = self
 
     if not music then

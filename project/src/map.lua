@@ -1,6 +1,6 @@
 -- map.lua
 --// Modules
-local json = require "libs.dkjson"
+local Json = require "libs.dkjson"
 
 -- Method
 local map = {}
@@ -29,22 +29,25 @@ end
 ]]--
 local function loadMap(state, mapData)
     state.map.tilemap = {}
-    for _, layer in ipairs(mapData.layers) do
+    for layerIndex, layer in ipairs(mapData.layers) do
         if layer.type ~= "tilelayer" then break end
-		for _, chunk in ipairs(layer.chunks) do
-			local chunkX, chunkY = chunk.x, chunk.y
-			local w, h = chunk.width, chunk.height
+        state.map.tilemap[layerIndex] = {}
+        local chunkX, chunkY = layer.x, layer.y
+		local w, h = layer.width, layer.height
 
-			for y = 0, h - 1 do
-				local row = chunkY + y + 1
-				state.map.tilemap[row] = state.map.tilemap[row] or {}
-				for x = 0, w - 1 do
-					local col = chunkX + x + 1
-					state.map.tilemap[row][col] = chunk.data[y * w + x + 1]
-				end
-			end
-		end
+        for y = 0, h - 1 do
+            local row = chunkY + y + 1
+            state.map.tilemap[layerIndex][row] = state.map.tilemap[layerIndex][row] or {}
+            for x = 0, w - 1 do
+                local col = chunkX + x + 1
+                state.map.tilemap[layerIndex][row][col] = layer.data[y * w + x + 1]
+            end
+        end
+        state.map.offsetx[layerIndex] = layer.offsetx or 0
+        state.map.offsety[layerIndex] = layer.offsety or 0
     end
+    state.map.tileWidth = mapData.tilewidth or 16
+    state.map.tileHeight = mapData.tileheight or 16
 end
 
 --[[
@@ -52,12 +55,12 @@ end
 ==== Will directly place the map's data inside state
 ]]--
 function map.load(state, name, tileset)
-    local tileset_f = love.filesystem.read(string.format("assets/maps/tilesets/%s.tsj", name or "test"))
-    local map_f = love.filesystem.read(string.format("assets/maps/data/%s.json", name or "test"))
-    local tilesetData = json.decode(tileset_f)
-    local mapData = json.decode(map_f)
+    local tileset_f = love.filesystem.read(string.format("assets/maps/tilesets/%s.tsj", name or "island"))
+    local map_f = love.filesystem.read(string.format("assets/maps/data/%s.json", name or "island"))
+    local tilesetData = Json.decode(tileset_f)
+    local mapData = Json.decode(map_f)
 
-    state.map.tilesetImage = love.graphics.newImage(string.format("assets/maps/tilemaps/%s.png", tileset or "Basics"))
+    state.map.tilesetImage = love.graphics.newImage(string.format("assets/maps/tilemaps/%s.png", tileset or "diverse"))
     loadQuads(state, tilesetData)
     loadMap(state, mapData)
 end
@@ -66,10 +69,15 @@ end
 ==== Render the map from state
 ]]--
 function map.render(state)
-    for i, row in ipairs(state.map.tilemap) do
-        for j, tile in ipairs(row) do
-            if tile ~= 0 then
-                love.graphics.draw(state.map.tilesetImage, state.map.quads[tile], j * 48, i * 48)
+    for l, layer in ipairs(state.map.tilemap) do
+        for i, row in pairs(layer) do
+            for j, tile in ipairs(row) do
+                if tile ~= 0 and state.map.quads[tile] then
+                    love.graphics.draw(state.map.tilesetImage,
+                        state.map.quads[tile],
+                        j * state.map.tileWidth + state.map.offsetx[l],
+                        i * state.map.tileHeight + state.map.offsety[l])
+                end
             end
         end
     end
