@@ -5,7 +5,6 @@ local cameraModule      =   require("camera")
 local playerModule      =   require("player")
 local mapModule         =   require("map")
 local musicModule       =   require("music")
-local inventoryModule   =   require("inventory")
 
 local data      =   dataModule.data or {}
 local player    =   data.player
@@ -37,7 +36,6 @@ local state = {
 ==== To be executed once at program's execution
 ]]--
 function love.load()
-    setmetatable(playerModule, {__index = inventoryModule})
     setmetatable(player, {__index = playerModule})
     setmetatable(camera, {__index = cameraModule})
 
@@ -55,10 +53,12 @@ end
 function love.draw()
     love.graphics.clear()
     love.graphics.draw(state.game.background, 0, 0)
+
     love.graphics.push()
     love.graphics.translate(-camera.x, -camera.y)
     mapModule.render(state)
     love.graphics.pop()
+
     player:render(state)
     player:giveMoney(5)
     love.graphics.print(player.inventory.money)

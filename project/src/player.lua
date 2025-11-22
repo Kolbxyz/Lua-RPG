@@ -1,11 +1,12 @@
 -- player.lua
-local dataModule    =   require("data")
-local os            =   require("os")
+local dataModule        =   require("data")
+local inventoryModule   =   require("inventory")
+local os                =   require("os")
 
-local data          =   dataModule.data or {}
-local game          =   data.game
+local data              =   dataModule.data or {}
+local game              =   data.game
 
-local methods = {}
+local methods = setmetatable({}, {__index = inventoryModule})
 
 --[[
 ==== Loads quads into the given state for player animations
